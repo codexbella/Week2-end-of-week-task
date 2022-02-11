@@ -3,3 +3,4 @@
 out
 .DS_Store
 target
+/src/main/java/de/codexbella/MainForTesting.java
