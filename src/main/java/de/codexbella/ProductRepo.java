@@ -29,6 +29,6 @@ public class ProductRepo {
     }
 
     public List<Product> getProductList() {
-        return new ArrayList<>();
+        return productList;
     }
 }
