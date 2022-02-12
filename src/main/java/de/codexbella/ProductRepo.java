@@ -25,7 +25,6 @@ public class ProductRepo {
             }
         }
         return "Product not part of list.";
-        //TODO getProductName implementieren: Liste durchgehen und <name> vom entsprechenden item rausgeben
     }
 
     public List<Product> getProductList() {

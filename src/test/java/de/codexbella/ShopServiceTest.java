@@ -97,7 +97,7 @@ class ShopServiceTest {
 
         OrderRepo testOrderRepo = new OrderRepo(testOrderList);
 
-        String expected = "Order no. 1002, [product name: Multitool, product id: 70010001]";
+        String expected = "Order no. 1002, [product name: Multitool, product id: 70010030]";
 
         Assertions.assertEquals(expected, testOrderRepo.getOrder(1002).toString());
     }

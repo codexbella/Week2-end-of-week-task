@@ -10,9 +10,14 @@ public class OrderRepo {
         this.orderList = orderList;
     }
 
-    public Order getOrder(int i) {
-        List<Product> productList = new ArrayList<>();
-        Order order = new Order(9999, productList);
-        return order;
+    public Order getOrder(int id) {
+        List<Order> orderList = this.orderList;
+        for (int i = 0; i < orderList.size(); i++) {
+            Order currentOrder = orderList.get(i);
+            if (currentOrder.getOrderID() == id) {
+                return currentOrder;
+            }
+        }
+        return null;
     }
 }

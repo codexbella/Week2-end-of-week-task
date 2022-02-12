@@ -12,6 +12,10 @@ public class Order {
     }
 
     public String toString() {
-        return "";//TODO Stringausgabe für Order implementieren
+        return "Order no. "+orderID+", "+products;
+    }
+
+    public int getOrderID() {
+        return orderID;
     }
 }
