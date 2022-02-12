@@ -12,6 +12,6 @@ public class Order {
     }
 
     public String toString() {
-        return null;//TODO Stringausgabe für Order implementieren
+        return "";//TODO Stringausgabe für Order implementieren
     }
 }
