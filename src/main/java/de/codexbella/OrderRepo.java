@@ -18,7 +18,7 @@ public class OrderRepo {
                 return currentOrder;
             }
         }
-        throw new RuntimeException("No such order in order repo.");//TODO noch richtig implementieren und testen
+        throw new RuntimeException("No such order in order repo.");
     }
 
     public List<Order> getOrders() {

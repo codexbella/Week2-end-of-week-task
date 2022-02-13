@@ -31,7 +31,7 @@ class ShopServiceTest {
         List<Product> testProductList = new ArrayList<>();
         testProductList.add(testProduct1);
         ProductRepo testProductRepo = new ProductRepo(testProductList);
-        Assertions.assertEquals("Product not part of list.", testProductRepo.getProductName(70010040));
+        Assertions.assertEquals("Product not part of inventory.", testProductRepo.getProductName(70010040));
     }
     @Test
     void shouldReturnAllProducts() {
@@ -73,6 +73,7 @@ class ShopServiceTest {
         testProductList.add(testProduct4);
         testProductList.add(testProduct5);
         testProductList.add(testProduct6);
+        testProductList.add(testProduct7);
 
         ProductRepo testProductRepo = new ProductRepo(testProductList);
 
@@ -293,6 +294,62 @@ class ShopServiceTest {
                 RuntimeException.class,
                 () -> {
                     testProductRepo.getProduct(70010010);
+                }
+        );
+    }
+    @Test
+    void gettingOfUnknownOrderCausesRuntimeException() {
+        Product testProduct1 = new Product("Tauchsäge", 70010010);
+        Product testProduct2 = new Product("Führungsschiene für Tauchsäge", 70010011);
+        Product testProduct3 = new Product("Winkelschleifer", 70010020);
+        Product testProduct4 = new Product("Multitool", 70010030);
+        Product testProduct5 = new Product("Druckluftschrauber", 70010040);
+        Product testProduct6 = new Product("Absaugmobil", 70010000);
+        Product testProduct7 = new Product("Kompressor", 70010001);
+
+        List<Product> testProductList = new ArrayList<>();
+
+        testProductList.add(testProduct1);
+        testProductList.add(testProduct2);
+        testProductList.add(testProduct3);
+        testProductList.add(testProduct4);
+        testProductList.add(testProduct5);
+        testProductList.add(testProduct6);
+        testProductList.add(testProduct7);
+
+        ProductRepo testProductRepo = new ProductRepo(testProductList);
+
+        List<Product> productsForOrder1 = new ArrayList<>();
+        productsForOrder1.add(testProductRepo.getProduct(70010010));
+        productsForOrder1.add(testProductRepo.getProduct(70010020));
+        productsForOrder1.add(testProductRepo.getProduct(70010040));
+
+        List<Product> productsForOrder3 = new ArrayList<>();
+        productsForOrder3.add(testProductRepo.getProduct(70010010));
+        productsForOrder3.add(testProductRepo.getProduct(70010000));
+
+        List<Product> productsForOrder4 = new ArrayList<>();
+        productsForOrder4.add(testProductRepo.getProduct(70010011));
+        productsForOrder4.add(testProductRepo.getProduct(70010020));
+        productsForOrder4.add(testProductRepo.getProduct(70010040));
+        productsForOrder4.add(testProductRepo.getProduct(70010000));
+        productsForOrder4.add(testProductRepo.getProduct(70010001));
+
+        Order testOrder1 = new Order(1001, productsForOrder1);
+        Order testOrder3 = new Order(1003, productsForOrder3);
+        Order testOrder4 = new Order(1004, productsForOrder4);
+
+        List<Order> testOrderList = new ArrayList<>();
+        testOrderList.add(testOrder1);
+        testOrderList.add(testOrder3);
+        testOrderList.add(testOrder4);
+
+        OrderRepo testOrderRepo = new OrderRepo(testOrderList);
+
+        Assertions.assertThrows(
+                RuntimeException.class,
+                () -> {
+                    testOrderRepo.getOrder(1002);
                 }
         );
     }

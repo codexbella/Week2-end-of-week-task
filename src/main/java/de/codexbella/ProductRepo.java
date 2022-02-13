@@ -33,6 +33,6 @@ public class ProductRepo {
                     return currentProduct;
                 }
             }
-            throw new RuntimeException("Product not available."); //TODO test
+            throw new RuntimeException("Product not available.");
     }
 }
