@@ -65,24 +65,35 @@ class ShopServiceTest {
         Product testProduct6 = new Product("Absaugmobil", 70010000);
         Product testProduct7 = new Product("Kompressor", 70010001);
 
+        List<Product> testProductList = new ArrayList<>();
+
+        testProductList.add(testProduct1);
+        testProductList.add(testProduct2);
+        testProductList.add(testProduct3);
+        testProductList.add(testProduct4);
+        testProductList.add(testProduct5);
+        testProductList.add(testProduct6);
+
+        ProductRepo testProductRepo = new ProductRepo(testProductList);
+
         List<Product> productsForOrder1 = new ArrayList<>();
-        productsForOrder1.add(testProduct1);
-        productsForOrder1.add(testProduct3);
-        productsForOrder1.add(testProduct5);
+        productsForOrder1.add(testProductRepo.getProduct(70010010));
+        productsForOrder1.add(testProductRepo.getProduct(70010020));
+        productsForOrder1.add(testProductRepo.getProduct(70010040));
 
         List<Product> productsForOrder2 = new ArrayList<>();
-        productsForOrder2.add(testProduct4);
+        productsForOrder2.add(testProductRepo.getProduct(70010030));
 
         List<Product> productsForOrder3 = new ArrayList<>();
-        productsForOrder3.add(testProduct1);
-        productsForOrder3.add(testProduct6);
+        productsForOrder3.add(testProductRepo.getProduct(70010010));
+        productsForOrder3.add(testProductRepo.getProduct(70010000));
 
         List<Product> productsForOrder4 = new ArrayList<>();
-        productsForOrder4.add(testProduct2);
-        productsForOrder4.add(testProduct3);
-        productsForOrder4.add(testProduct5);
-        productsForOrder4.add(testProduct6);
-        productsForOrder4.add(testProduct7);
+        productsForOrder4.add(testProductRepo.getProduct(70010011));
+        productsForOrder4.add(testProductRepo.getProduct(70010020));
+        productsForOrder4.add(testProductRepo.getProduct(70010040));
+        productsForOrder4.add(testProductRepo.getProduct(70010000));
+        productsForOrder4.add(testProductRepo.getProduct(70010001));
 
         Order testOrder1 = new Order(1001, productsForOrder1);
         Order testOrder2 = new Order(1002, productsForOrder2);
@@ -111,16 +122,30 @@ class ShopServiceTest {
         Product testProduct2 = new Product("Führungsschiene für Tauchsäge", 70010011);
         Product testProduct3 = new Product("Winkelschleifer", 70010020);
         Product testProduct4 = new Product("Multitool", 70010030);
+        Product testProduct5 = new Product("Druckluftschrauber", 70010040);
+        Product testProduct6 = new Product("Absaugmobil", 70010000);
+        Product testProduct7 = new Product("Kompressor", 70010001);
+
+        List<Product> testProductList = new ArrayList<>();
+
+        testProductList.add(testProduct1);
+        testProductList.add(testProduct2);
+        testProductList.add(testProduct3);
+        testProductList.add(testProduct4);
+        testProductList.add(testProduct5);
+        testProductList.add(testProduct6);
+
+        ProductRepo testProductRepo = new ProductRepo(testProductList);
 
         List<Product> productsForOrder1 = new ArrayList<>();
-        productsForOrder1.add(testProduct1);
+        productsForOrder1.add(testProductRepo.getProduct(70010010));
 
         List<Product> productsForOrder2 = new ArrayList<>();
-        productsForOrder2.add(testProduct2);
+        productsForOrder2.add(testProductRepo.getProduct(70010011));
 
         List<Product> productsForOrder3 = new ArrayList<>();
-        productsForOrder3.add(testProduct3);
-        productsForOrder3.add(testProduct4);
+        productsForOrder3.add(testProductRepo.getProduct(70010020));
+        productsForOrder3.add(testProductRepo.getProduct(70010030));
 
         Order testOrder1 = new Order(1001, productsForOrder1);
         Order testOrder2 = new Order(1002, productsForOrder2);
@@ -139,10 +164,110 @@ class ShopServiceTest {
 
         Assertions.assertEquals(expected, testOrderRepo.getOrders().toString());
     }
-    /*
     @Test
     void placingAnOrder() {
-    }
+        Product testProduct1 = new Product("Tauchsäge", 70010010);
+        Product testProduct2 = new Product("Führungsschiene für Tauchsäge", 70010011);
+        Product testProduct3 = new Product("Winkelschleifer", 70010020);
+        Product testProduct4 = new Product("Multitool", 70010030);
+        Product testProduct5 = new Product("Druckluftschrauber", 70010040);
+        Product testProduct6 = new Product("Absaugmobil", 70010000);
+        Product testProduct7 = new Product("Kompressor", 70010001);
 
-     */
+        List<Product> testProductList = new ArrayList<>();
+
+        testProductList.add(testProduct1);
+        testProductList.add(testProduct2);
+        testProductList.add(testProduct3);
+        testProductList.add(testProduct4);
+        testProductList.add(testProduct5);
+        testProductList.add(testProduct6);
+        testProductList.add(testProduct7);
+
+        ProductRepo testProductRepo = new ProductRepo(testProductList);
+
+        List<Product> productsForOrder1 = new ArrayList<>();
+        productsForOrder1.add(testProductRepo.getProduct(70010010));
+        productsForOrder1.add(testProductRepo.getProduct(70010020));
+        productsForOrder1.add(testProductRepo.getProduct(70010040));
+
+        List<Product> productsForOrder2 = new ArrayList<>();
+        productsForOrder2.add(testProductRepo.getProduct(70010030));
+
+        List<Product> productsForOrder3 = new ArrayList<>();
+        productsForOrder3.add(testProductRepo.getProduct(70010010));
+        productsForOrder3.add(testProductRepo.getProduct(70010000));
+
+        Order testOrder1 = new Order(1001, productsForOrder1);
+        Order testOrder2 = new Order(1002, productsForOrder2);
+        Order testOrder3 = new Order(1003, productsForOrder3);
+
+        List<Order> testOrderList = new ArrayList<>();
+        testOrderList.add(testOrder1);
+        testOrderList.add(testOrder2);
+        testOrderList.add(testOrder3);
+
+        OrderRepo testOrderRepo = new OrderRepo(testOrderList);
+
+        List<Product> productsForOrder4 = new ArrayList<>();
+        productsForOrder4.add(testProductRepo.getProduct(70010001));
+
+        testOrderRepo.newOrder(productsForOrder4);
+
+        String expected = "Order no. 1004, [product name: Kompressor, product id: 70010001]";
+
+        Assertions.assertEquals(expected, testOrderRepo.getOrder(1004).toString());
+    }
+    @Test
+    void placingAnOrderOfUnknownProduct() {
+        Product testProduct1 = new Product("Tauchsäge", 70010010);
+        Product testProduct2 = new Product("Führungsschiene für Tauchsäge", 70010011);
+        Product testProduct3 = new Product("Winkelschleifer", 70010020);
+        Product testProduct4 = new Product("Multitool", 70010030);
+        Product testProduct5 = new Product("Druckluftschrauber", 70010040);
+        Product testProduct6 = new Product("Absaugmobil", 70010000);
+
+        List<Product> testProductList = new ArrayList<>();
+
+        testProductList.add(testProduct1);
+        testProductList.add(testProduct2);
+        testProductList.add(testProduct3);
+        testProductList.add(testProduct4);
+        testProductList.add(testProduct5);
+        testProductList.add(testProduct6);
+
+        ProductRepo testProductRepo = new ProductRepo(testProductList);
+
+        List<Product> productsForOrder1 = new ArrayList<>();
+        productsForOrder1.add(testProductRepo.getProduct(70010010));
+        productsForOrder1.add(testProductRepo.getProduct(70010020));
+        productsForOrder1.add(testProductRepo.getProduct(70010040));
+
+        List<Product> productsForOrder2 = new ArrayList<>();
+        productsForOrder2.add(testProductRepo.getProduct(70010030));
+
+        List<Product> productsForOrder3 = new ArrayList<>();
+        productsForOrder3.add(testProductRepo.getProduct(70010010));
+        productsForOrder3.add(testProductRepo.getProduct(70010000));
+
+        Order testOrder1 = new Order(1001, productsForOrder1);
+        Order testOrder2 = new Order(1002, productsForOrder2);
+        Order testOrder3 = new Order(1003, productsForOrder3);
+
+        List<Order> testOrderList = new ArrayList<>();
+        testOrderList.add(testOrder1);
+        testOrderList.add(testOrder2);
+        testOrderList.add(testOrder3);
+
+        OrderRepo testOrderRepo = new OrderRepo(testOrderList);
+
+        List<Product> productsForOrder4 = new ArrayList<>();
+
+        Assertions.assertThrows(
+                RuntimeException.class,
+                () -> {
+                    productsForOrder4.add(testProductRepo.getProduct(70010001));
+                }
+        );
+    }
 }

@@ -10,24 +10,29 @@ public class ProductRepo {
         this.productList = productList;
     }
 
-    /*
-    public ProductRepo(List<Product> productList) {
-        this.productList = productList;
-    }
-    */
-
     public String getProductName(int id) {
         List<Product> productList = this.productList;
-        for (int i = 0; i < productList.size(); i++) {
+        for (int i = 0; i < productList.size(); i++) { //TODO durch for each ersetzen
             Product currentProduct = productList.get(i);
             if (currentProduct.getProductID() == id) {
                 return currentProduct.getName();
             }
         }
-        return "Product not part of list.";
+        return "Product not part of list."; //TODO testen
     }
 
     public List<Product> getProductList() {
         return productList;
+    }
+
+    public Product getProduct(int id) {
+        List<Product> productList = this.productList;
+            for (int i = 0; i < productList.size(); i++) {
+                Product currentProduct = productList.get(i);
+                if (currentProduct.getProductID() == id) {
+                    return currentProduct;
+                }
+            }
+            throw new RuntimeException("Product not available."); //TODO implementieren und testen
     }
 }
