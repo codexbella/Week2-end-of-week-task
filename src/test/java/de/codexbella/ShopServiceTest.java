@@ -56,7 +56,7 @@ class ShopServiceTest {
         Assertions.assertEquals(expected, testProductRepo.getProductList().toString());
     }
     @Test
-    void shouldReturnASingleOrderByID() {
+    void shouldReturnASingleOrderByOrderID() {
         Product testProduct1 = new Product("Tauchsäge", 70010010);
         Product testProduct2 = new Product("Führungsschiene für Tauchsäge", 70010011);
         Product testProduct3 = new Product("Winkelschleifer", 70010020);
@@ -97,54 +97,49 @@ class ShopServiceTest {
 
         OrderRepo testOrderRepo = new OrderRepo(testOrderList);
 
-        String expected = "Order no. 1002, [product name: Multitool, product id: 70010030]";
+        String expected1 = "Order no. 1001, [product name: Tauchsäge, product id: 70010010, " +
+                "product name: Winkelschleifer, product id: 70010020, " +
+                "product name: Druckluftschrauber, product id: 70010040]";
+        String expected2 = "Order no. 1002, [product name: Multitool, product id: 70010030]";
 
-        Assertions.assertEquals(expected, testOrderRepo.getOrder(1002).toString());
+        Assertions.assertEquals(expected1, testOrderRepo.getOrder(1001).toString());
+        Assertions.assertEquals(expected2, testOrderRepo.getOrder(1002).toString());
     }
-    /*
     @Test
     void shouldReturnAllOrders() {
         Product testProduct1 = new Product("Tauchsäge", 70010010);
         Product testProduct2 = new Product("Führungsschiene für Tauchsäge", 70010011);
         Product testProduct3 = new Product("Winkelschleifer", 70010020);
         Product testProduct4 = new Product("Multitool", 70010030);
-        Product testProduct5 = new Product("Druckluftschrauber", 70010040);
-        Product testProduct6 = new Product("Absaugmobil", 70010000);
-
-        List<Product> listOfAllTestProducts = new ArrayList<>();
-
-        listOfAllTestProducts.add(testProduct1);
-        listOfAllTestProducts.add(testProduct2);
-        listOfAllTestProducts.add(testProduct3);
-        listOfAllTestProducts.add(testProduct4);
-        listOfAllTestProducts.add(testProduct5);
-        listOfAllTestProducts.add(testProduct6);
-
-        ProductRepo testProductRepo = new ProductRepo(listOfAllTestProducts);
 
         List<Product> productsForOrder1 = new ArrayList<>();
         productsForOrder1.add(testProduct1);
-        productsForOrder1.add(testProduct3);
-        productsForOrder1.add(testProduct5);
 
         List<Product> productsForOrder2 = new ArrayList<>();
-        productsForOrder2.add(testProduct4);
+        productsForOrder2.add(testProduct2);
 
         List<Product> productsForOrder3 = new ArrayList<>();
-        productsForOrder3.add(testProduct1);
-        productsForOrder3.add(testProduct6);
-
-        List<Product> productsForOrder4 = new ArrayList<>();
-        productsForOrder4.add(testProduct2);
-        productsForOrder4.add(testProduct3);
-        productsForOrder4.add(testProduct5);
-        productsForOrder4.add(testProduct6);
+        productsForOrder3.add(testProduct3);
+        productsForOrder3.add(testProduct4);
 
         Order testOrder1 = new Order(1001, productsForOrder1);
         Order testOrder2 = new Order(1002, productsForOrder2);
         Order testOrder3 = new Order(1003, productsForOrder3);
-        Order testOrder4 = new Order(1004, productsForOrder4);
+
+        List<Order> testOrderList = new ArrayList<>();
+        testOrderList.add(testOrder1);
+        testOrderList.add(testOrder2);
+        testOrderList.add(testOrder3);
+
+        OrderRepo testOrderRepo = new OrderRepo(testOrderList);
+
+        String expected = "[Order no. 1001, [product name: Tauchsäge, product id: 70010010], " +
+                "Order no. 1002, [product name: Führungsschiene für Tauchsäge, product id: 70010011], " +
+                "Order no. 1003, [product name: Winkelschleifer, product id: 70010020, product name: Multitool, product id: 70010030]]";
+
+        Assertions.assertEquals(expected, testOrderRepo.getOrders().toString());
     }
+    /*
     @Test
     void placingAnOrder() {
     }

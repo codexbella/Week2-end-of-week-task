@@ -20,4 +20,8 @@ public class OrderRepo {
         }
         return null;
     }
+
+    public List<Order> getOrders() {
+        return orderList;
+    }
 }
