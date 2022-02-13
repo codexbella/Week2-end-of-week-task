@@ -12,13 +12,13 @@ public class ProductRepo {
 
     public String getProductName(int id) {
         List<Product> productList = this.productList;
-        for (int i = 0; i < productList.size(); i++) { //TODO durch for each ersetzen
+        for (int i = 0; i < productList.size(); i++) { //TODO replace with for each
             Product currentProduct = productList.get(i);
             if (currentProduct.getProductID() == id) {
                 return currentProduct.getName();
             }
         }
-        return "Product not part of list."; //TODO testen
+        return "Product not part of inventory.";
     }
 
     public List<Product> getProductList() {
@@ -33,6 +33,6 @@ public class ProductRepo {
                     return currentProduct;
                 }
             }
-            throw new RuntimeException("Product not available."); //TODO implementieren und testen
+            throw new RuntimeException("Product not available."); //TODO test
     }
 }

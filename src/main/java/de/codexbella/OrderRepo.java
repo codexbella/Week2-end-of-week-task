@@ -12,7 +12,7 @@ public class OrderRepo {
 
     public Order getOrder(int id) {
         List<Order> orderList = this.orderList;
-        for (int i = 0; i < orderList.size(); i++) {//TODO durch for each ersetzen
+        for (int i = 0; i < orderList.size(); i++) {//TODO replace with for each
             Order currentOrder = orderList.get(i);
             if (currentOrder.getOrderID() == id) {
                 return currentOrder;
