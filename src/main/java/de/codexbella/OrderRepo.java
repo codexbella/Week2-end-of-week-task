@@ -1,10 +1,9 @@
 package de.codexbella;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class OrderRepo {
-    private List<Order> orderList;
+    private List<Order> orderList;//TODO change to Hashmap
 
     public OrderRepo(List<Order> orderList) {
         this.orderList = orderList;
@@ -25,7 +24,7 @@ public class OrderRepo {
         return orderList;
     }
 
-    public void newOrder(List<Product> productsForOrder) {
+    public void add(List<Product> productsForOrder) {
         int newOrderID = orderList.get(orderList.size()-1).getOrderID() + 1;
         Order newOrder = new Order(newOrderID, productsForOrder);
         orderList.add(newOrder);

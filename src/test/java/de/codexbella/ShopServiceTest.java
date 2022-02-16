@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class ShopServiceTest {
     @Test
     void shouldReturnASingleProductByID() {
@@ -15,7 +13,10 @@ class ShopServiceTest {
         List<Product> testProductList = new ArrayList<>();
         testProductList.add(testProduct1);
         ProductRepo testProductRepo = new ProductRepo(testProductList);
-        Assertions.assertEquals("Tauchsäge", testProductRepo.getProductName(70010010));
+
+        ShopService testShopService = new ShopService(testProductRepo, new OrderRepo(List.of()));
+
+        Assertions.assertEquals("Tauchsäge", testShopService.getProductName(70010010));
     }
     @Test
     void shouldReturnNotPartOfInventory() {
@@ -23,15 +24,20 @@ class ShopServiceTest {
         List<Product> testProductList = new ArrayList<>();
         testProductList.add(testProduct1);
         ProductRepo testProductRepo = new ProductRepo(testProductList);
-        Assertions.assertEquals("Product not part of inventory.", testProductRepo.getProductName(70010000));
+
+        ShopService testShopService = new ShopService(testProductRepo, new OrderRepo(List.of()));
+
+        Assertions.assertEquals("Product not part of inventory.", testShopService.getProductName(70010000));
     }
     @Test
     void shouldReturnProductNotInList() {
         Product testProduct1 = new Product("Tauchsäge", 70010010);
-        List<Product> testProductList = new ArrayList<>();
-        testProductList.add(testProduct1);
+        List<Product> testProductList = List.of(testProduct1);
         ProductRepo testProductRepo = new ProductRepo(testProductList);
-        Assertions.assertEquals("Product not part of inventory.", testProductRepo.getProductName(70010040));
+
+        ShopService testShopService = new ShopService(testProductRepo, new OrderRepo(List.of()));
+
+        Assertions.assertEquals("Product not part of inventory.", testShopService.getProductName(70010040));
     }
     @Test
     void shouldReturnAllProducts() {
@@ -52,8 +58,11 @@ class ShopServiceTest {
         testProductList.add(testProduct6);
 
         ProductRepo testProductRepo = new ProductRepo(testProductList);
+
+        ShopService testShopService = new ShopService(testProductRepo, new OrderRepo(List.of()));
+
         String expected = "[product name: Tauchsäge, product id: 70010010, product name: Führungsschiene für Tauchsäge, product id: 70010011, product name: Winkelschleifer, product id: 70010020, product name: Multitool, product id: 70010030, product name: Druckluftschrauber, product id: 70010040, product name: Absaugmobil, product id: 70010000]";
-        Assertions.assertEquals(expected, testProductRepo.getProductList().toString());
+        Assertions.assertEquals(expected, testShopService.getProductList().toString());
     }
     @Test
     void shouldReturnASingleOrderByOrderID() {
@@ -109,13 +118,15 @@ class ShopServiceTest {
 
         OrderRepo testOrderRepo = new OrderRepo(testOrderList);
 
+        ShopService testShopService = new ShopService(testProductRepo, testOrderRepo);
+
         String expected1 = "Order no. 1001, [product name: Tauchsäge, product id: 70010010, " +
                 "product name: Winkelschleifer, product id: 70010020, " +
                 "product name: Druckluftschrauber, product id: 70010040]";
         String expected2 = "Order no. 1002, [product name: Multitool, product id: 70010030]";
 
-        Assertions.assertEquals(expected1, testOrderRepo.getOrder(1001).toString());
-        Assertions.assertEquals(expected2, testOrderRepo.getOrder(1002).toString());
+        Assertions.assertEquals(expected1, testShopService.getOrder(1001).toString());
+        Assertions.assertEquals(expected2, testShopService.getOrder(1002).toString());
     }
     @Test
     void shouldReturnAllOrders() {
@@ -159,11 +170,13 @@ class ShopServiceTest {
 
         OrderRepo testOrderRepo = new OrderRepo(testOrderList);
 
+        ShopService testShopService = new ShopService(testProductRepo, testOrderRepo);
+
         String expected = "[Order no. 1001, [product name: Tauchsäge, product id: 70010010], " +
                 "Order no. 1002, [product name: Führungsschiene für Tauchsäge, product id: 70010011], " +
                 "Order no. 1003, [product name: Winkelschleifer, product id: 70010020, product name: Multitool, product id: 70010030]]";
 
-        Assertions.assertEquals(expected, testOrderRepo.getOrders().toString());
+        Assertions.assertEquals(expected, testShopService.getOrders().toString());
     }
     @Test
     void placingAnOrder() {
@@ -213,11 +226,13 @@ class ShopServiceTest {
         List<Product> productsForOrder4 = new ArrayList<>();
         productsForOrder4.add(testProductRepo.getProduct(70010001));
 
-        testOrderRepo.newOrder(productsForOrder4);
+        testOrderRepo.add(productsForOrder4);
+
+        ShopService testShopService = new ShopService(testProductRepo, testOrderRepo);
 
         String expected = "Order no. 1004, [product name: Kompressor, product id: 70010001]";
 
-        Assertions.assertEquals(expected, testOrderRepo.getOrder(1004).toString());
+        Assertions.assertEquals(expected, testShopService.getOrder(1004).toString());
     }
     @Test
     void placingAnOrderOfUnknownProductCausesRuntimeException() {
@@ -264,12 +279,14 @@ class ShopServiceTest {
 
         List<Product> productsForOrder4 = new ArrayList<>();
 
+        ShopService testShopService = new ShopService(testProductRepo, testOrderRepo);
+
         Assertions.assertThrows(
                 RuntimeException.class,
                 () -> {
-                    productsForOrder4.add(testProductRepo.getProduct(70010001));
+                    productsForOrder4.add(testShopService.getProduct(70010001));
                 }
-        );
+        );//TODO mit e.getMessage()
     }
     @Test
     void gettingOfUnknownProductCausesRuntimeException() {
@@ -290,12 +307,14 @@ class ShopServiceTest {
 
         ProductRepo testProductRepo = new ProductRepo(testProductList);
 
+        ShopService testShopService = new ShopService(testProductRepo, new OrderRepo(List.of()));
+
         Assertions.assertThrows(
                 RuntimeException.class,
                 () -> {
-                    testProductRepo.getProduct(70010010);
+                    testShopService.getProduct(70010010);
                 }
-        );
+        );//TODO mit e.getMessage()
     }
     @Test
     void gettingOfUnknownOrderCausesRuntimeException() {
@@ -346,11 +365,13 @@ class ShopServiceTest {
 
         OrderRepo testOrderRepo = new OrderRepo(testOrderList);
 
+        ShopService testShopService = new ShopService(testProductRepo, testOrderRepo);
+
         Assertions.assertThrows(
                 RuntimeException.class,
                 () -> {
-                    testOrderRepo.getOrder(1002);
+                    testShopService.getOrder(1002);
                 }
-        );
+        );//TODO mit e.getMessage()
     }
 }

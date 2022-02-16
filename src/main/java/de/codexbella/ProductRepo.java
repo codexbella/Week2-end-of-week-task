@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductRepo {
-    private List<Product> productList;
+    private List<Product> productList;//TODO change to Hashmap
 
     public ProductRepo(List<Product> productList) {
         this.productList = productList;
     }
+    //TODO noch ein Konstruktor ohne Übergabe der productList und add-Methode
 
     public String getProductName(int id) {
         List<Product> productList = this.productList;
